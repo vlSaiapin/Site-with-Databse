@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order items</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <a href="{{ url_for('orders') }}" class="btn btn-primary">
+                 Назад до списку
+            </a>
+        </div>
+    
+        <div class="card order-info-card">
+            <div class="page-header">
+                <h1>Замовлення №{{ order.order_id }}</h1>
+                <span class="status-badge status-{{ order.status|lower|replace(' ', '-') }}">
+                    {{ order.status }}
+                </span>
+            </div>
+    
+            <div class="order-details-grid">
+                <div class="info-item">
+                    <strong> Клієнт:</strong> <span>{{ order.customer_name }}</span>
+                </div>
+                <div class="info-item">
+                    <strong> Працівник:</strong> <span>{{ order.employee_name }}</span>
+                </div>
+                <div class="info-item">
+                    <strong> Дата:</strong> <span>{{ order.order_date }}</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="page-header">
+            <h3>Позиції у чеку</h3>
+            <a href="{{ url_for('add_record', table_name='order_items', order_id=order.order_id) }}"
+                class="btn btn-secondary">
+                <span> Додати товар</span>
+            </a>
+        </div>
+    
+        <div class="table-container card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Товар (ID)</th>
+                        <th>Кількість</th>
+                        <th>Ціна за од.</th>
+                        <th>Сума</th>
+                        <th style="text-align: center;">Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in order_items %}
+                    <tr>
+                        <td>{{ i.order_item_id }}</td>
+                        <td><strong>{{ i.product_id }}</strong></td>
+                        <td>{{ i.quantity }} шт.</td>
+                        <td>{{ i.price_at_order }} грн</td>
+                        <td><strong>{{ i.quantity * i.price_at_order }}</strong> грн</td>
+                        <td class="actions-cell">
+                            <a href="{{ url_for('edit_record', table_name='order_items', record_id=i.order_item_id) }}"
+                                class="btn-edit">
+                                <img src="/static/img/icons/edit-icon.png" alt="Edit" style="width: 18px;">
+                            </a>
+                            <a href="{{ url_for('delete_record', table_name='order_items', record_id=i.order_item_id) }}"
+                                class="delete-link btn-delete" data-name="товар №{{ i.product_id }}">
+                                <img src="/static/img/icons/delete-icon.png" alt="Delete" style="width: 18px;">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

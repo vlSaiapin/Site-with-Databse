@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>{{ title }}</h2>
+    
+        <form method="post" action="{{ request.path }}">
+            <div class="form-group">
+                <label>ID Товару:</label>
+                <input type="number" name="product_id" min="1" value="{{ item.product_id if item else '' }}" required
+                    placeholder="Введіть унікальний ID товару">
+            </div>
+    
+            <div class="form-group">
+                <label>Кількість на складі:</label>
+                <input type="number" name="quantity_in_stock" min="0" value="{{ item.quantity_in_stock if item else '0' }}"
+                    required placeholder="Наприклад: 100">
+            </div>
+    
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-secondary"> Зберегти</button>
+                <a href="{{ url_for('warehouse') }}" style="flex: 1; text-decoration: none;">
+                    <button type="button" class="btn btn-outline" style="width: 100%;"> Закрити</button>
+                </a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

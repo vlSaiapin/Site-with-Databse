@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    
+    <div class="form-container">
+        <h2>{{ title }}</h2>
+    
+        <form method="post" action="{{ request.path }}">
+            <div class="form-group">
+                <label>Назва товару:</label>
+                <input type="text" name="product_name" value="{{ item.product_name if item else '' }}" required
+                    placeholder="Введіть назву товару">
+            </div>
+    
+            <div class="form-group">
+                <label>ID Категорії:</label>
+                <input type="number" name="category_id" min="1" value="{{ item.category_id if item else '' }}" required
+                    placeholder="Наприклад: 5">
+            </div>
+    
+            <div class="form-group">
+                <label>ID Постачальника:</label>
+                <input type="number" name="supplier_id" min="1" value="{{ item.supplier_id if item else '' }}" required
+                    placeholder="Наприклад: 12">
+            </div>
+    
+            <div class="form-group">
+                <label>Ціна (грн):</label>
+                <input type="number" name="price" step="0.05" min="0.05" value="{{ item.price if item else '' }}" required
+                    placeholder="0.00">
+            </div>
+    
+            <div class="form-group">
+                <label>Одиниця товару:</label>
+                <input type="text" name="unit" value="{{ item.unit if item else '' }}" required
+                    placeholder="Наприклад: шт, кг, м">
+            </div>
+    
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-secondary"> Зберегти товар</button>
+                <a href="{{ url_for('products') }}" class="link-button-wrapper">
+                    <button type="button" class="btn btn-outline"> Закрити</button>
+                </a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

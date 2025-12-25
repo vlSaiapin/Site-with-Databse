@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div id="menuBtn" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <h2 style="color: white; padding-left: 32px;">Меню</h2>
+    
+        <a href="{{ url_for('index') }}" class="sidebar-item">
+            <img src="/static/img/icons/main-page.png" class="sidebar-icon"> Головна сторінка
+        </a>
+    
+        <a {% if request.endpoint == 'orders' %} class="sidebar-item active-link" {% else %} href="{{ url_for('orders') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/orders.png" class="sidebar-icon"> Замовлення
+        </a>
+    
+        <a {% if request.endpoint == 'customers' %} class="sidebar-item active-link" {% else %} href="{{ url_for('customers') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/customers.png" class="sidebar-icon"> Клієнти
+        </a>
+    
+        <a {% if request.endpoint == 'products' %} class="sidebar-item active-link" {% else %} href="{{ url_for('products') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/products.png" class="sidebar-icon"> Товари
+        </a>
+    
+        <a {% if request.endpoint == 'warehouse' %} class="sidebar-item active-link" {% else %} href="{{ url_for('warehouse') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/warehouse.png" class="sidebar-icon"> Склад
+        </a>
+    
+        <a {% if request.endpoint == 'categories' %} class="sidebar-item active-link" {% else %} href="{{ url_for('categories') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/categories.png" class="sidebar-icon"> Категорії товарів
+        </a>
+    
+        <a {% if request.endpoint == 'suppliers' %} class="sidebar-item active-link" {% else %} href="{{ url_for('suppliers') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/suppliers.png" class="sidebar-icon"> Постачальники
+        </a>
+    
+        <a {% if request.endpoint == 'employees' %} class="sidebar-item active-link" {% else %} href="{{ url_for('employees') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/employees.png" class="sidebar-icon"> Співробітники
+        </a>
+
+    </div>
+
+    <main class="container">
+        <header class="page-header">
+            <h1>Категорії будівельних матеріалів</h1>
+            <a href="{{ url_for('add_record', table_name='categories') }}" class="btn btn-secondary">
+                Додати категорію
+            </a>
+        </header>
+
+        <div class="table-container card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва категорії</th>
+                        <th>Опис матеріалів</th>
+                        <th class="text-center">Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                    <tr>
+                        <td class="id-column">{{ cat.category_id }}</td>
+                        <td class="font-bold">{{ cat.category_name }}</td>
+                        <td class="text-muted">{{ cat.description }}</td>
+                        <td class="actions-cell">
+                            <a href="{{ url_for('edit_record', table_name='categories', record_id=cat.category_id) }}"
+                                class="btn-edit">
+                                <img src="/static/img/icons/edit-icon.png" title="Редагувати" alt="✎">
+                            </a>
+                            <a href="{{ url_for('delete_record', table_name='categories', record_id=cat.category_id) }}"
+                                class="btn-delete delete-link">
+                                <img src="/static/img/icons/delete-icon.png" title="Видалити" alt="🗑">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

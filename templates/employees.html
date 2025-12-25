@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div id="menuBtn" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <h2 style="color: white; padding-left: 32px;">Меню</h2>
+    
+        <a href="{{ url_for('index') }}" class="sidebar-item">
+            <img src="/static/img/icons/main-page.png" class="sidebar-icon"> Головна сторінка
+        </a>
+    
+        <a {% if request.endpoint=='orders' %} class="sidebar-item active-link" {% else %} href="{{ url_for('orders') }}"
+            class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/orders.png" class="sidebar-icon"> Замовлення
+        </a>
+    
+        <a {% if request.endpoint=='customers' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('customers') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/customers.png" class="sidebar-icon"> Клієнти
+        </a>
+    
+        <a {% if request.endpoint=='products' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('products') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/products.png" class="sidebar-icon"> Товари
+        </a>
+    
+        <a {% if request.endpoint=='warehouse' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('warehouse') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/warehouse.png" class="sidebar-icon"> Склад
+        </a>
+    
+        <a {% if request.endpoint=='categories' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('categories') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/categories.png" class="sidebar-icon"> Категорії товарів
+        </a>
+    
+        <a {% if request.endpoint=='suppliers' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('suppliers') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/suppliers.png" class="sidebar-icon"> Постачальники
+        </a>
+    
+        <a {% if request.endpoint=='employees' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('employees') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/employees.png" class="sidebar-icon"> Співробітники
+        </a>
+    
+    </div>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>Управління персоналом</h1>
+            <a href="{{ url_for('add_record', table_name='employees') }}" class="btn btn-secondary">
+                <span> Додати співробітника</span>
+            </a>
+        </div>
+    
+        <div class="filter-section card">
+            <form method="get" action="{{ url_for('employees') }}" class="filter-form">
+                <div class="filter-group">
+                    <input type="checkbox" name="use_last_name" {% if request.args.get('use_last_name') %}checked{% endif
+                        %}>
+                    <label>Прізвище:</label>
+                    <input type="text" name="last_name" value="{{ request.args.get('last_name','') }}"
+                        placeholder="Пошук...">
+                </div>
+    
+                <div class="filter-group">
+                    <input type="checkbox" name="use_pos" {% if request.args.get('use_pos') %}checked{% endif %}>
+                    <label>Посада:</label>
+                    <input type="text" name="position" value="{{ request.args.get('position','') }}"
+                        placeholder="Директор...">
+                </div>
+    
+                <div class="filter-group">
+                    <input type="checkbox" name="use_phone" {% if request.args.get('use_phone') %}checked{% endif %}>
+                    <label>Телефон:</label>
+                    <input type="text" name="phone" value="{{ request.args.get('phone','') }}" placeholder="+380...">
+                </div>
+    
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">Фільтрувати</button>
+                    <a href="{{ url_for('employees') }}" class="btn btn-outline">Скинути</a>
+                </div>
+            </form>
+        </div>
+    
+        <div class="table-container card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ім'я</th>
+                        <th>Прізвище</th>
+                        <th>Посада</th>
+                        <th>Телефон</th>
+                        <th style="text-align: center;">Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in employees %}
+                    <tr>
+                        <td>{{ e.employee_id }}</td>
+                        <td>{{ e.first_name }}</td>
+                        <td>{{ e.last_name }}</td>
+                        <td>{{ e.position }}</td>
+                        <td>{{ e.phone }}</td>
+                        <td class="actions-cell">
+                            <a href="{{ url_for('edit_record', table_name='employees', record_id=e.employee_id) }}"
+                                class="btn-edit">
+                                <img src="{{ url_for('static', filename='img/icons/edit-icon.png') }}" alt="Редагувати">
+                            </a>
+                            <a href="{{ url_for('delete_record', table_name='employees', record_id=e.employee_id) }}"
+                                class="delete-link btn-delete" data-name="{{ e.first_name }} {{ e.last_name }}">
+                                <img src="{{ url_for('static', filename='img/icons/delete-icon.png') }}" alt="Видалити">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+</body>
+</html>

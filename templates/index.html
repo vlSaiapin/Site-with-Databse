@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kursova</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    
+    <header class="main-header">
+            <h1>Управління базою даних компанії-продавця будівельних матеріалів</h1>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="dashboard-container">
+            <section class="card">
+                <div class="card-header">
+                    <h2>Продажі та клієнти</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('orders') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/orders.png') }}" alt="Замовлення" class="link-icon">
+                        <span>Замовлення</span>
+                    </a>
+                    <a href="{{ url_for('customers') }}" class="dashboard-link"> 
+                        <img src="{{ url_for('static', filename='/img/icons/customers.png') }}" alt="Клієнти" class="link-icon">
+                        <span>Клієнти</span>
+                    </a>
+                </div>
+            </section>
+    
+            <section class="card">
+                <div class="card-header">
+                    <h2>Товари та логістика</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('products') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/products.png') }}" alt="Товари" class="link-icon">
+                        <span>Товари</span>
+                    </a>
+                    <a href="{{ url_for('warehouse') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/warehouse.png') }}" alt="Склад" class="link-icon">
+                        <span>Склад</span>
+                    </a>
+                    <a href="{{ url_for('categories') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/categories.png') }}" alt="Категорії товару" class="link-icon">
+                        <span>Категорії товарів</span>
+                    </a>
+                </div>
+            </section>
+    
+            <section class="card">
+                <div class="card-header">
+                    <h2>Ресурси та постачання</h2>
+                </div>
+                <div class="card-body">
+                    <a href="{{ url_for('suppliers') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/suppliers.png') }}" alt="Постачальники" class="link-icon">
+                        <span>Постачальники</span>
+                    </a>
+                    <a href="{{ url_for('employees') }}" class="dashboard-link">
+                        <img src="{{ url_for('static', filename='/img/icons/employees.png') }}" alt="Співробітники" class="link-icon">
+                        <span>Співробітники</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

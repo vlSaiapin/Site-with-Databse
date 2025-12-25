@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>{{ title }}</h2>
+    
+        <form method="post" action="{{ request.path }}">
+            <div class="form-group">
+                <label>ID Клієнта:</label>
+                <input type="number" name="customer_id" min="1" value="{{ item.customer_id if item else '' }}" required
+                    placeholder="Введіть ID клієнта">
+            </div>
+    
+            <div class="form-group">
+                <label>ID Працівника:</label>
+                <input type="number" name="employee_id" min="1" value="{{ item.employee_id if item else '' }}" required
+                    placeholder="Введіть ID працівника">
+            </div>
+    
+            <div class="form-group">
+                <label>Дата замовлення:</label>
+                <input type="date" name="order_date" value="{{ item.order_date if item else '' }}" required>
+            </div>
+    
+            <div class="form-group">
+                <label>Статус:</label>
+                <select name="status" class="form-select" required>
+                    <option value="New" {% if item and item.status=='New' %}selected{% endif %}>Нове</option>
+                    <option value="In Progress" {% if item and item.status=='In Progress' %}selected{% endif %}>В роботі
+                    </option>
+                    <option value="Completed" {% if item and item.status=='Completed' %}selected{% endif %}>Завершено
+                    </option>
+                    <option value="Cancelled" {% if item and item.status=='Cancelled' %}selected{% endif %}>Скасовано
+                    </option>
+                </select>
+            </div>
+    
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-secondary"> Зберегти</button>
+                <a href="{{ url_for('orders') }}" style="flex: 1; text-decoration: none;">
+                    <button type="button" class="btn btn-outline" style="width: 100%;"> Закрити</button>
+                </a>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+        <div id="menuBtn" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div id="sidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+            <h2 style="color: white; padding-left: 32px;">Меню</h2>
+        
+            <a href="{{ url_for('index') }}" class="sidebar-item">
+                <img src="/static/img/icons/main-page.png" class="sidebar-icon"> Головна сторінка
+            </a>
+        
+            <a {% if request.endpoint=='orders' %} class="sidebar-item active-link" {% else %} href="{{ url_for('orders') }}"
+                class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/orders.png" class="sidebar-icon"> Замовлення
+            </a>
+        
+            <a {% if request.endpoint=='customers' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('customers') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/customers.png" class="sidebar-icon"> Клієнти
+            </a>
+        
+            <a {% if request.endpoint=='products' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('products') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/products.png" class="sidebar-icon"> Товари
+            </a>
+        
+            <a {% if request.endpoint=='warehouse' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('warehouse') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/warehouse.png" class="sidebar-icon"> Склад
+            </a>
+        
+            <a {% if request.endpoint=='categories' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('categories') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/categories.png" class="sidebar-icon"> Категорії товарів
+            </a>
+        
+            <a {% if request.endpoint=='suppliers' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('suppliers') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/suppliers.png" class="sidebar-icon"> Постачальники
+            </a>
+        
+            <a {% if request.endpoint=='employees' %} class="sidebar-item active-link" {% else %}
+                href="{{ url_for('employees') }}" class="sidebar-item" {% endif %}>
+                <img src="/static/img/icons/employees.png" class="sidebar-icon"> Співробітники
+            </a>
+        
+        </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Управління замовленнями</h1>
+            <a href="{{ url_for('add_record', table_name='orders') }}" class="btn btn-secondary">
+                <span> Створити замовлення</span>
+            </a>
+        </div>
+    
+        <div class="filter-section card">
+            <form method="get" action="{{ url_for('orders') }}" class="filter-form">
+    
+                <div class="filter-group">
+                    <label><input type="checkbox" name="use_order" {% if request.args.get('use_order') %}checked{% endif %}>
+                        ID Замовлення</label>
+                    <input type="number" name="order_id" min="0" value="{{ request.args.get('order_id','') }}"
+                        placeholder="№">
+                </div>
+    
+                <div class="filter-group">
+                    <label><input type="checkbox" name="use_customer" {% if request.args.get('use_customer') %}checked{%
+                            endif %}> ID Клієнта</label>
+                    <input type="number" name="customer_id" min="0" value="{{ request.args.get('customer_id','') }}"
+                        placeholder="ID">
+                </div>
+    
+                <div class="filter-group">
+                    <label><input type="checkbox" name="use_status" {% if request.args.get('use_status') %}checked{% endif
+                            %}> Статус</label>
+                    <select name="status" class="form-select">
+                        <option value="New" {% if request.args.get('status')=='New' %}selected{% endif %}>Нове</option>
+                        <option value="In Progress" {% if request.args.get('status')=='In Progress' %}selected{% endif %}>В
+                            роботі</option>
+                        <option value="Completed" {% if request.args.get('status')=='Completed' %}selected{% endif %}>
+                            Завершено</option>
+                        <option value="Cancelled" {% if request.args.get('status')=='Cancelled' %}selected{% endif %}>
+                            Скасовано</option>
+                    </select>
+                </div>
+    
+                <div class="filter-group">
+                    <label><input type="checkbox" name="use_date_from" {% if request.args.get('use_date_from') %}checked{%
+                            endif %}> Дата з:</label>
+                    <input type="date" name="date_from" value="{{ request.args.get('date_from','') }}">
+                </div>
+    
+                <div class="filter-group">
+                    <label><input type="checkbox" name="use_date_to" {% if request.args.get('use_date_to') %}checked{% endif
+                            %}> Дата по:</label>
+                    <input type="date" name="date_to" value="{{ request.args.get('date_to','') }}">
+                </div>
+    
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">Фільтрувати</button>
+                    <a href="{{ url_for('orders') }}" class="btn btn-outline">Скинути</a>
+                </div>
+            </form>
+        </div>
+    
+        <div class="table-container card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Клієнт</th>
+                        <th>Працівник</th>
+                        <th>Дата</th>
+                        <th>Статус</th>
+                        <th style="text-align: center;">Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in orders %}
+                    <tr>
+                        <td><strong>{{ o.order_id }}</strong></td>
+                        <td>ID: {{ o.customer_id }}</td>
+                        <td>ID: {{ o.employee_id }}</td>
+                        <td>{{ o.order_date }}</td>
+                        <td><span class="status-badge status-{{ o.status|lower|replace(' ', '-') }}">{{ o.status }}</span>
+                        </td>
+                        <td class="actions-cell">
+                            <a href="{{ url_for('order_details', order_id=o.order_id) }}" 
+                            class="btn-details">
+                                <img src="/static/img/icons/details-icon.png" alt="Details">
+                            </a>
+                            <a href="{{ url_for('edit_record', table_name='orders', record_id=o.order_id) }}"
+                                class="btn-edit">
+                                <img src="/static/img/icons/edit-icon.png" alt="Edit">
+                            </a>
+                            <a href="{{ url_for('delete_record', table_name='orders', record_id=o.order_id) }}"
+                                class="delete-link btn-delete" data-name="Замовлення №{{ o.order_id }}">
+                                <img src="/static/img/icons/delete-icon.png" alt="Delete">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
