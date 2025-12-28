@@ -659,7 +659,6 @@ input[type=number]::-webkit-outer-spin-button {
     /* Пунктирна рамка */
 }
 
-/* Допоміжний текст під інпутом */
 .form-help {
     display: block;
     margin-top: 4px;
@@ -667,7 +666,6 @@ input[type=number]::-webkit-outer-spin-button {
     color: #9ca3af;
 }
 
-/* Обгортка для кнопки-посилання, щоб вона займала flex-місце */
 .link-button-wrapper {
     flex: 1;
     text-decoration: none;
@@ -675,4 +673,69 @@ input[type=number]::-webkit-outer-spin-button {
 
 .link-button-wrapper .btn {
     width: 100%;
+}
+
+/* ------------ Pagination ---------------- */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a,
+.pagination strong {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.pagination strong {
+    font-weight: bold;
+}
+
+
+/* ------------ Report-page --------------- */
+.report-page .data-table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.report-page .data-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.report-page .data-table th:first-child,
+.report-page .data-table td:first-child {
+    text-align: left;
+    padding-left: 25px;
+}
+
+.report-page .data-table td:not(:first-child) {
+    font-variant-numeric: tabular-nums;
+}
+
+.report-page .data-table {
+    font-size: 1.05rem;
+}
+
+/** --------- Оформлення діаграми --------- */
+.chart-card {
+    margin-top: 40px;
+}
+
+.chart-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    height: 400px;
+}
+
+.chart-body canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.chart-card+.card {
+    margin-top: 30px;
 }

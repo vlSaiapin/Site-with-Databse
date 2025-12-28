@@ -330,6 +330,45 @@ def warehouse():
     
     return render_template('warehouse.html', warehouse=data)
 
+@app.route('/report/orders')
+def report():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # 🔹 Загальна статистика
+    cursor.execute("""
+        SELECT 
+            COUNT(DISTINCT o.order_id) AS total_orders,
+            COALESCE(SUM(oi.quantity * p.price), 0) AS total_sum
+        FROM orders o
+        LEFT JOIN order_items oi ON o.order_id = oi.order_id
+        LEFT JOIN products p ON oi.product_id = p.product_id
+    """)
+    summary = cursor.fetchone()
+
+    # 🔹 Статистика по статусах
+    cursor.execute("""
+        SELECT 
+            o.status,
+            COUNT(DISTINCT o.order_id) AS orders_count,
+            COALESCE(SUM(oi.quantity * p.price), 0) AS orders_sum
+        FROM orders o
+        LEFT JOIN order_items oi ON o.order_id = oi.order_id
+        LEFT JOIN products p ON oi.product_id = p.product_id
+        GROUP BY o.status
+    """)
+    by_status = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        'report.html',
+        summary=summary,
+        by_status=by_status
+    )
+
+
 # ----- Кнопки додавання/редагування та видалення записів ------
 @app.route('/<table_name>/add', methods=['GET', 'POST'])
 def add_record(table_name):
@@ -421,3 +460,4 @@ def delete_record(table_name, record_id):
         return redirect(url_for('order_details', order_id=target_order_id))
 
     return redirect(url_for(table_name))
+

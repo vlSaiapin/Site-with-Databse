@@ -58,6 +58,10 @@
             <img src="/static/img/icons/employees.png" class="sidebar-icon"> Співробітники
         </a>
     
+        <a {% if request.endpoint=='report' %} class="sidebar-item active-link" {% else %} href="{{ url_for('report') }}"
+            class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/report.png" class="sidebar-icon"> Звіт по замовленнях
+        </a>
     </div>
 
     <div class="container">

@@ -17,31 +17,50 @@
     
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
-        <h2 class="sidebar-title">Меню</h2>
+        <h2 style="color: white; padding-left: 32px;">Меню</h2>
     
         <a href="{{ url_for('index') }}" class="sidebar-item">
             <img src="/static/img/icons/main-page.png" class="sidebar-icon"> Головна сторінка
         </a>
-        <a {% if request.endpoint=='orders' %} class="sidebar-item active-link" {% else %} href="{{ url_for('orders') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='orders' %} class="sidebar-item active-link" {% else %} href="{{ url_for('orders') }}"
+            class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/orders.png" class="sidebar-icon"> Замовлення
         </a>
-        <a {% if request.endpoint=='customers' %} class="sidebar-item active-link" {% else %} href="{{ url_for('customers') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='customers' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('customers') }}" class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/customers.png" class="sidebar-icon"> Клієнти
         </a>
-        <a {% if request.endpoint=='products' %} class="sidebar-item active-link" {% else %} href="{{ url_for('products') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='products' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('products') }}" class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/products.png" class="sidebar-icon"> Товари
         </a>
-        <a {% if request.endpoint=='warehouse' %} class="sidebar-item active-link" {% else %} href="{{ url_for('warehouse') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='warehouse' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('warehouse') }}" class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/warehouse.png" class="sidebar-icon"> Склад
         </a>
-        <a {% if request.endpoint=='categories' %} class="sidebar-item active-link" {% else %} href="{{ url_for('categories') }}" class="sidebar-item" {% endif %}>
-            <img src="/static/img/icons/categories.png" class="sidebar-icon"> Категорії
+    
+        <a {% if request.endpoint=='categories' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('categories') }}" class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/categories.png" class="sidebar-icon"> Категорії товарів
         </a>
-        <a {% if request.endpoint=='suppliers' %} class="sidebar-item active-link" {% else %} href="{{ url_for('suppliers') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='suppliers' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('suppliers') }}" class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/suppliers.png" class="sidebar-icon"> Постачальники
         </a>
-        <a {% if request.endpoint=='employees' %} class="sidebar-item active-link" {% else %} href="{{ url_for('employees') }}" class="sidebar-item" {% endif %}>
+    
+        <a {% if request.endpoint=='employees' %} class="sidebar-item active-link" {% else %}
+            href="{{ url_for('employees') }}" class="sidebar-item" {% endif %}>
             <img src="/static/img/icons/employees.png" class="sidebar-icon"> Співробітники
+        </a>
+    
+        <a {% if request.endpoint=='report' %} class="sidebar-item active-link" {% else %} href="{{ url_for('report') }}"
+            class="sidebar-item" {% endif %}>
+            <img src="/static/img/icons/report.png" class="sidebar-icon"> Звіт по замовленнях
         </a>
     </div>
 
